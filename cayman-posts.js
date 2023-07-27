@@ -84,23 +84,27 @@
             // postInput.value = '';
             // document.getElementById('output').src = '';
 
-            //rendering posts
             console.log("loading post...")
             // format new post in html
+            postHtml = '';
+
             let completePost = `
                 <div class="post-box">
-                    <img src=${image} alt="image not available">
-                    <h1>${titleValue}</h1>
-                    <p>Author: ${authorValue}</p>
-                    <p>Date: ${dateValue}</p>
-                    <p>${postValue}</p>
+                    <img src=${posts[posts.length - 1]["Image"]} alt="image not available">
+                    <h1>${posts[posts.length - 1]["Title"]}</h1>
+                    <p>Author: ${posts[posts.length - 1]["Author"]}</p>
+                    <p>Date: ${posts[posts.length - 1]["Date"]}</p>
+                    <p>${posts[posts.length - 1]["Post"]}</p>
                 </div>
-            <hr>
             `;
-            collectHtml += completePost;
+            postHtml += completePost;
             console.log("post loaded");
+
+            document.getElementById('new-post').innerHTML = postHtml;
         }); 
+        
         document.getElementById('collect-post-info').innerHTML = collectHtml;
+        
         
     }
     collectUserPost(); 
