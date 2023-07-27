@@ -73,6 +73,8 @@
                 "Post": postValue,
             };
             posts.push(newPost);
+            console.log(posts[posts.length - 1]["Image"]);
+            console.log(posts[posts.length - 1]["Title"]);
             console.log(posts)
 
             //reset input values
@@ -87,11 +89,11 @@
             // format new post in html
             let completePost = `
                 <div class="post-box">
-                    <img src=${posts["Image"]} alt="image not available">
-                    <h1>${posts["Title"]}</h1>
-                    <p>Author: ${posts["Author"]}</p>
-                    <p>Date: ${posts["Date"]}</p>
-                    <p>${posts["Post"]}</p>
+                    <img src=${image} alt="image not available">
+                    <h1>${titleValue}</h1>
+                    <p>Author: ${authorValue}</p>
+                    <p>Date: ${dateValue}</p>
+                    <p>${postValue}</p>
                 </div>
             <hr>
             `;
