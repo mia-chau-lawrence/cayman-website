@@ -40,8 +40,10 @@
     }
     //  })
     renderBlog(news);
+    
     console.log("blog rendered");
+    console.log(news);
 
 
-    }());
+}());
     

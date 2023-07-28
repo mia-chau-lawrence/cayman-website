@@ -1,13 +1,5 @@
 (function () {
-    let posts = [
-        // {
-        // "Image":"mary-lawrence.jpg",
-        // "Title":"Mary",
-        // "Name":"Mia",
-        // "Date": "today",
-        // "Post": "How are yall?",
-        // },
-    ];
+    let posts = [];
 
     let collectHtml = '';
 
@@ -36,8 +28,7 @@
         loadFile = function(event) {
             image = document.getElementById('output');
             image.src = URL.createObjectURL(event.target.files[0]);
-            image = image.src
-            console.log(image);
+            image = image.src        
             return image;
         };
 
@@ -73,8 +64,7 @@
             dateInput.value = '';
             postInput.value = '';
             document.getElementById('output').src = '';
-
-            console.log("loading post...");
+            
             // format new post in html
             postHtml = '';
 
@@ -101,11 +91,8 @@
 
         console.log(posts);  
         document.getElementById('collect-post-info').innerHTML = collectHtml;
-        
-        //saving posts to local storage
-        // const news = localStorage.getItem("myPosts");
-        // console.log("NEWS:" + news);
     }
+
     collectUserPost(); //collect user post
 
 }());
