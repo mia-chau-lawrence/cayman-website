@@ -78,11 +78,11 @@
             console.log(posts)
 
             //reset input values
-            //titleInput.value = '';
-            // authorInput.value = '';
-            // dateInput.value = '';
-            // postInput.value = '';
-            // document.getElementById('output').src = '';
+            titleInput.value = '';
+            authorInput.value = '';
+            dateInput.value = '';
+            postInput.value = '';
+            document.getElementById('output').src = '';
 
             console.log("loading post...")
             // format new post in html
