@@ -377,6 +377,11 @@ article {
 
 }
 
+.new-post-column {
+    width:100%;
+    padding: 20px 150px;
+}
+
 .twin-column {
     width:37%;
 }

@@ -1,14 +1,14 @@
-(function () {
+let posts = [
+    // {
+    // "Image":"mary-lawrence.jpg",
+    // "Title":"Mary",
+    // "Name":"Mia",
+    // "Date": "today",
+    // "Post": "How are yall?",
+    // },
+];
 
-    let posts = [
-        // {
-        // "Image":"",
-        // "Title":"",
-        // "Name":"",
-        // "Date": "",
-        // "Post": "",
-        // },
-    ];
+(function () {
 
     let collectHtml = '';
 
@@ -58,12 +58,6 @@
             let dateValue = dateInput.value;
             let postValue = postInput.value;
 
-            // log the answers
-            console.log('Title:', titleValue);
-            console.log('Author:', authorValue);
-            console.log('Date:', dateValue);
-            console.log('Post:', postValue);
-
             //create new post object
             let newPost = {
                 "Image": image,
@@ -73,41 +67,86 @@
                 "Post": postValue,
             };
             posts.push(newPost);
-            console.log(posts[posts.length - 1]["Image"]);
-            console.log(posts[posts.length - 1]["Title"]);
-            console.log(posts)
 
-            //reset input values
+            // reset input values
             titleInput.value = '';
             authorInput.value = '';
             dateInput.value = '';
             postInput.value = '';
             document.getElementById('output').src = '';
 
-            console.log("loading post...")
+            console.log("loading post...");
             // format new post in html
             postHtml = '';
 
             let completePost = `
-                <div class="post-box">
-                    <img src=${posts[posts.length - 1]["Image"]} alt="image not available">
-                    <h1>${posts[posts.length - 1]["Title"]}</h1>
-                    <p>Author: ${posts[posts.length - 1]["Author"]}</p>
-                    <p>Date: ${posts[posts.length - 1]["Date"]}</p>
-                    <p>${posts[posts.length - 1]["Post"]}</p>
+
+            <div class="main-enclose">
+                <div class="main-card">
+                    <img src="${posts[posts.length - 1]["Image"]}" alt="Image not available" style="width:100%;">
+                    <div class="m-container">
+                        <h3>${posts[posts.length - 1]["Author"]}</h3>
+                        <h5>${posts[posts.length - 1]["Date"]}</h5>
+                        <p>${posts[posts.length - 1]["Post"]}</p>
+                    </div>
                 </div>
+            </div>
+            
             `;
             postHtml += completePost;
             console.log("post loaded");
 
             document.getElementById('new-post').innerHTML = postHtml;
-        }); 
-        
+            localStorage.setItem("myPosts", posts);
+        });   
+
+        console.log(posts);  
         document.getElementById('collect-post-info').innerHTML = collectHtml;
-        
-        
     }
-    collectUserPost(); 
-    //renderPost(posts);
+    const news = localStorage.getItem("myPosts");
+    collectUserPost(); //collect user post
+
+    //load posts to news.html
+    // document.getElementById('load-posts').addEventListener('click', function (event) {
+        console.log("we getting there! " + news);   
+        //render blog post
+        function renderBlog (blogBoi) {
+            let blogHtml = '';
+            // blogBoi.sort((a,b) => {
+            //     if (a.Date_value < b.Date_value) { return 1; }
+            //     if (a.Date_value > b.Date_value) { return -1; }
+            //     return 0;
+            // });
+            
+            console.log("Preparing to create blog");
+            for (let blog of blogBoi) {
+                let blogContent = '';
+
+                let blogTemplate = `
+                    <div class="main-enclose">
+                        <div class="main-card">
+                            <img src="${blog["Image"]}" alt="Image not available" style="width:100%;">
+                            <div class="m-container">
+                                <h3>${blog["Title"]}</h3>
+                                <h5>${blog["Date"]}</span></h5>
+                                <p>${blog["Post"]}</p>
+                            </div>
+                        </div>
+                        <div class="bottom-card">
+                            <div class="container">
+                                <button class="button1">READ MORE &raquo;</button>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                blogHtml += blogTemplate;   
+                console.log("created blog");
+            }       
+            document.getElementById('blog-post').innerHTML = blogHtml;  
+        }
+    //  })
+    renderBlog(news);
+    console.log("blog rendered");
+        
 
 }());
