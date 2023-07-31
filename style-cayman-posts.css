@@ -361,33 +361,22 @@ article {
 
 
 .lhs-column {
-    width:75%;
-    padding-top: 50px;
-    padding-right: 35px;
+    width:70%;
+    padding: 35px 35px 50px 75px;
+    /* padding-right: 35px;
     padding-bottom: 50px; 
-    padding-left: 100px 
+    padding-left: 100px  */
 }
 
 .rhs-column {
-    width:25%;
-    padding-top: 50px;
-    padding-right: 100px;
-    padding-bottom: 50px; 
-    padding-left: 35px 
+    width:30%;
+    padding: 35px 75px 50px 35px;
 
 }
 
 .new-post-column {
     width:100%;
     padding: 20px 150px;
-}
-
-.twin-column {
-    width:37%;
-}
-
-.three-column {
-    width:26%;
 }
 
 /*Go together*/
@@ -833,7 +822,7 @@ color:white;
     position: -webkit-sticky; /*safari*/
     position: sticky;
     top: 0;
-    padding-right:20px;
+    /* padding-right:20px; */
 
 }
 
@@ -845,6 +834,10 @@ color:white;
 
 .navbar > div:first-child {
     margin-left: auto;
+}
+
+.navbar > div:last-child {
+    margin-right: 20px;
 }
 
 .navbar a {
@@ -971,13 +964,22 @@ th, td {
 
 @media screen and (max-width:900px) {
     .lhs-column {
-    width:100%;
+        width:100%;
+        padding:25px 50px;
     }
     .rhs-column {
-    width:100%;
-    }
-    .twin-column, .three-column {
         width:100%;
+        padding:25px 50px;
+    }
+    .navbar > div {
+        width:100%;
+    }
+    
+    .navbar > div:last-child {
+        margin-right: 0px;
+    }
+    .active {
+        background-color:#009999;
     }
 }
 
@@ -989,28 +991,28 @@ th, td {
 
 @media screen and (max-width: 800px) {
 .about-column {
-    width:50%;
+        width:50%;
     }
 .main-enclose, .side-enclose {
-    margin:30px;
+        margin:30px;
     }
 .side-enclose {
-    margin:30px;
+        margin:30px;
     }  
 .b-container {
-    padding-top:16px; 
+        padding-top:16px; 
     }
     .navbar {
-    flex-direction:column;
-    position: -webkit-static; /*safari*/
-    position: static;
+        flex-direction:column;
+        position: -webkit-static; /*safari*/
+        position: static;
     }
     .navbar > div {
-    justify-content:center;
+        justify-content:center;
     }
     .p-column {
-    flex: 100%;
-    max-width:100%;
+        flex: 100%;
+        max-width:100%;
     }
 } 
 
