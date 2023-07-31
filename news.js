@@ -1,5 +1,5 @@
 (function () {
-    const news = JSON.parse(localStorage.getItem("myPosts"));
+    const news = JSON.parse(localStorage.getItem("myPosts") ?? []);
     //load posts to news.html
     // document.getElementById('load-posts').addEventListener('click', function (event) {
     // console.log("we getting there! " + news);   

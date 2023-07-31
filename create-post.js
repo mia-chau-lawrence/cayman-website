@@ -86,7 +86,10 @@
             console.log("post loaded");
 
             document.getElementById('new-post').innerHTML = postHtml;
-            localStorage.setItem("myPosts", JSON.stringify(posts));
+            
+            //save posts to local storage
+            let news = JSON.parse(localStorage.getItem("myPosts") ?? []);
+            localStorage.setItem("myPosts", JSON.stringify(news.concat(posts)));
         });   
 
         console.log(posts);  
