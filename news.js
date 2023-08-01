@@ -1,7 +1,8 @@
 (function () {
     const news = JSON.parse(localStorage.getItem("myPosts") ?? []);
-    console.log(news);
-    
+    //load posts to news.html
+    // document.getElementById('load-posts').addEventListener('click', function (event) {
+    // console.log("we getting there! " + news);   
     //render blog post
     function renderBlog (blogBoi) {
         let blogHtml = '';

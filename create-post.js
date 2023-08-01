@@ -88,7 +88,8 @@
             document.getElementById('new-post').innerHTML = postHtml;
             
             //save posts to local storage
-            let news = JSON.parse(localStorage.getItem("myPosts") ?? []);
+            let myPosts = localStorage.getItem("myPosts");
+            let news = JSON.parse(myPosts ?? "[]");
             localStorage.setItem("myPosts", JSON.stringify(news.concat(posts)));
         });   
 
