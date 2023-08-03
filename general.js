@@ -8,8 +8,8 @@
 
             let rPostTemplate = `
                 <div class="side-card">
-                    <ul class="p-posts">
-                        <li><a href="news.html">${recent["Title"]}</a></li>
+                    <ul class="p-posts">                        
+                        <li><a href="news.html"><img src="${recent["Image"]}" alt="Dad's Birthday Cake" width="50px" align="middle">${recent["Title"]}</a></li>
                     </ul>
                 </div>
                 `;
