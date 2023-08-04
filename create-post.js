@@ -55,7 +55,7 @@
             // get values from user
             let titleValue = titleInput.value;
             let authorValue = authorInput.value;
-            let dateValue =  `${monthArray[month]} ${day}, ${year} ${hour}:${minute}`;
+            let dateValue =  `${monthArray[month]} ${day}, ${year}`;
             let postValue = postInput.value;
 
             //create new post object

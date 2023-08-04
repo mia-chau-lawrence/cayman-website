@@ -351,6 +351,7 @@ article {
     display:flex;
     width:100%;
     flex-flow:row wrap;
+    /* padding:50px 0px; */
 }
 
 .home-img-container {

@@ -11,12 +11,12 @@
             let blogContent = '';
 
             let blogTemplate = `
-            <div class="side-card">
-                <ul class="p-posts">                        
-                    <li><a href="news.html"><img src="${article["Image"]}" alt="" width="50px" align="middle"> ${article["Title"]}</a></li>
-                </ul>
-            </div>
-                `;
+                <div class="side-card">
+                    <ul class="p-posts">                        
+                        <li><a href="news.html"><img src="${article["Image"]}" alt="" width="50px" align="middle"> ${article["Title"]}</a></li>
+                    </ul>
+                </div>
+                    `;
             blogHtml += blogTemplate;   
             console.log("created blog");
         }       
