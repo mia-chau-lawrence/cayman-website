@@ -1,5 +1,6 @@
 (function () {
     let posts = [];
+    // localStorage.clear();
 
     let collectHtml = '';
 
@@ -14,8 +15,8 @@
                 <input type="text" name="title" id="title"><br><br>
                 <label for="author">Author: </label>
                 <input type="text" name="author" id="author"><br><br>
-                <label for="date">Date: </label>
-                <input type="date" name="date" id="date"><br><br>
+                <!--<label for="date">Date: </label>
+                <input type="date" name="date" id="date"><br><br>-->
                 <label for="post">Post: </label>
                 <input type="text" name="post" id="post"><br><br>
                 <input type="submit">
@@ -39,13 +40,22 @@
             // Get the form elements by their names
             let titleInput = document.getElementById('title');
             let authorInput = document.getElementById('author');
-            let dateInput = document.getElementById('date');
             let postInput = document.getElementById('post');
+
+            //date 
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = date.getMonth();
+            let day = date.getDay();
+            let hour = date.getHours();
+            let minute = date.getMinutes();
+
+            let monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
             // get values from user
             let titleValue = titleInput.value;
             let authorValue = authorInput.value;
-            let dateValue = dateInput.value;
+            let dateValue =  `${monthArray[month]} ${day}, ${year} ${hour}:${minute}`;
             let postValue = postInput.value;
 
             //create new post object
@@ -53,6 +63,7 @@
                 "Image": image,
                 "Title": titleValue,
                 "Author": authorValue,
+                "Date_Value": date,
                 "Date": dateValue,
                 "Post": postValue,
             };
@@ -61,7 +72,7 @@
             // reset input values
             titleInput.value = '';
             authorInput.value = '';
-            dateInput.value = '';
+            // dateInput.value = '';
             postInput.value = '';
             document.getElementById('output').src = '';
             

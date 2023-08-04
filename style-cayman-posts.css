@@ -401,6 +401,10 @@ article {
     transition:0.3s;
 }
 
+.main-enclose:last-child {
+    margin-bottom: 0;
+}
+
 .main-enclose:hover {
     box-shadow: 0 12px 24px rgba(0,0,0,0.12), 0 9px 18px rgba(0,0,0,0.24); 
 }
@@ -453,7 +457,7 @@ article {
     padding:30px 50px;
     width:100%;
     background-color:white;
-    overflow:auto;
+    /* overflow:auto; */
     font-size:18px;
 }
 
@@ -612,7 +616,7 @@ border: 1px solid #33cccc;
 
 /*End of buttons*/ 
 
-input[type=text], input[type=email], input[type=tel] {
+input[type=text], input[type=email], input[type=tel], input[type=date] {
 width: 100%;
 padding:8px;
 margin-bottom: 12px;
@@ -1032,6 +1036,9 @@ th, td {
 @media screen and (max-width: 500px) {
     .profile > div {
         width:100%;
+    }
+    .m-container {
+        font-size:16px;
     }
 }
 

@@ -1,24 +1,27 @@
 (function () {
     const news = JSON.parse(localStorage.getItem("myPosts") ?? []);
+    console.log(news);
+    console.log(news.length);
 
-    function renderRecentNews (postBoi) {
-        let rPostHTML = '';
-        for (let recent = 0; recent < news.length-1; recent++) {
+    function renderRecentNews (newies) {
+        let blogHtml = '';
+        
+        console.log("Preparing to create blog");
+        for (let article of newies) {
             let blogContent = '';
 
-            let rPostTemplate = `
-                <div class="side-card">
-                    <ul class="p-posts">                        
-                        <li><a href="news.html"><img src="${recent["Image"]}" alt="Dad's Birthday Cake" width="50px" align="middle">${recent["Title"]}</a></li>
-                    </ul>
-                </div>
+            let blogTemplate = `
+            <div class="side-card">
+                <ul class="p-posts">                        
+                    <li><a href="news.html"><img src="${article["Image"]}" alt="" width="50px" align="middle"> ${article["Title"]}</a></li>
+                </ul>
+            </div>
                 `;
-            rPostHTML += rPostTemplate;   
-            console.log("created side content (news)");
+            blogHtml += blogTemplate;   
+            console.log("created blog");
         }       
-        document.getElementById('recent-news').innerHTML = rPostHTML;  
+        document.getElementById('blog-post').innerHTML = blogHtml;  
     }
-
-    renderRecentPosts(news);
+    renderRecentNews(news);
 
 }());
