@@ -3,13 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const sqlite3 = require('sqlite3').verbose();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-var multer  = require('multer');
+var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/postimages/');
@@ -36,22 +37,38 @@ app.use('/users', usersRouter);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-const newsPosts = [];
+//const newsPosts = [];
 
-app.get('/myposts', function(request, response) {
-  // let db= new sqlite3.Database('./mcu.db', sqlite3.OPEN_READWRITE, (err) => {
-  //   if (err) {
-  //     response.send(400);
-  //     return;
-  //   }
-  //   runQueries(response,db);
-  // });
-  console.log("GET newsPosts:", newsPosts);
-  response.send(newsPosts);
+app.get('/myposts', function (request, response) {
+  let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.log("open db", err);
+      response.statusCode(400);
+      return;
+    }
+    let sql = "select posts_id, post from posts order by posts_id";
+    let params = [];
+    db.all(sql, params, function (err, rows) {
+      if (err) {
+        console.log("insert", err);
+        response.statusCode(400);
+        return;
+      }
+      let newsPosts = [];
+      rows.forEach((row) => {
+        console.log(row);
+        newsPosts.push(JSON.parse(row.post));
+      });
+      console.log("GET newsPosts:", newsPosts);
+      response.send(newsPosts);
+    });
+    db.close();
+  });
+
 });
 
 
-app.post('/mypost', upload.single('blogimage'), function(request, response) {
+app.post('/mypost', upload.single('blogimage'), function (request, response) {
   console.log("POST data", request.body);
   console.log("POST file", request.file);
 
@@ -64,50 +81,61 @@ app.post('/mypost', upload.single('blogimage'), function(request, response) {
   let minute = date.getMinutes();
 
   let monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  let dateValue =  `${monthArray[month]} ${day}, ${year}`;
+  let dateValue = `${monthArray[month]} ${day}, ${year}`;
   console.log(dateValue);
 
-  let datePost = {created_at: date, display_date: dateValue} 
+  let datePost = { created_at: date, display_date: dateValue }
 
   let newsPost = request.body; //JSON.parse(request.body);
 
   newsPost.created_at = datePost.created_at;
   newsPost.date = datePost.display_date;
-  // let db= new sqlite3.Database('./mcu.db', sqlite3.OPEN_READWRITE, (err) => {
-  //   if (err) {
-  //     response.send(400);
-  //     return;
-  //   }
-  //   runQueries(response,db);
-  // });
 
   try {
     if (request.file) {
-    newsPost.image = "/postimages/" + request.file.filename;
+      newsPost.image = "/postimages/" + request.file.filename;
     }
-  
-  newsPosts.push(newsPost);
-  console.log("POST newsPosts", newsPosts);
-    
-    response.redirect("/news.html");
+
+    //  newsPosts.push(newsPost);
+    let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
+      if (err) {
+        console.log("open db", err);
+        response.statusCode(400);
+        return;
+      }
+      let sql = "insert into posts (post) values (?)";
+      let params = [JSON.stringify(newsPost)];
+      db.run(sql, params, function (err) {
+        if (err) {
+          console.log("insert", err);
+          response.statusCode(400);
+          return;
+        }
+        response.redirect("/news.html");
+      });
+      db.close();
+    });
+    //console.log("POST newsPosts", newsPosts);
+
+
     //response.sendStatus(200);
 
   }
-  catch(e) {
-    console.error.log(e);
+  catch (e) {
+    console.log("catch", e);
     response.sendStatus(500);
   }
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   console.log("Express default handler");
   //next(createError(404));
   res.status(404).send("NOT FOUND:" + req.url);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

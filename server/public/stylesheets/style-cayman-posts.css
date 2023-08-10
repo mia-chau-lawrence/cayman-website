@@ -40,7 +40,7 @@ h3.changed, h5.changed {
     transition:0.5s;
 }
 
-.summary-text {
+.hide-post {
     display: none;
 }
     

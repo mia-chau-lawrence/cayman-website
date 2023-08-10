@@ -15,14 +15,14 @@
     function renderBlog (blogBoi) {
         let blogHtml = '';
         blogBoi.sort((a,b) => {
-            if (a.created_at < b.created_at) { return 1; }
-            if (a.created_at > b.created_at) { return -1; }
+            if (a.created_at > b.created_at) { return 1; }
+            if (a.created_at < b.created_at) { return -1; }
             return 0;
         });
         
         console.log("Preparing to create blog");
         for (let blog of blogBoi) {
-            let blogContent = '';
+            // let blogContent = '';
 
             let img = "";
             if (blog["image"]) {
@@ -37,12 +37,12 @@
                             <h3>${blog["title"]}</h3>
                             <h4>${blog["author"]}</h4>
                             <h5>${blog["date"]}</h5>
-                            <p>${blog["post"]}</p>
+                            <div><p>${blog["post"]}</p></div>
                         </div>
                     </div>
                     <div class="bottom-card">
                         <div class="container">
-                            <button class="button1">READ MORE &raquo;</button>
+                            <button class="button1 news-show-btn">READ MORE &raquo;</button>
                         </div>
                     </div>
                 </div>
@@ -50,9 +50,30 @@
             blogHtml += blogTemplate;   
         } 
         console.log("created blog:", blogHtml);
-
-        document.getElementById('blog-posts').innerHTML = blogHtml;  
+        document.getElementById('blog-posts').innerHTML = blogHtml;
+        
+        //show and hide news details
+        // let btns = document.getElementsByClassName('news-show-btn');
+        // for (let btn of btns) {
+        //     btn.onclick = function (e) {
+        //         //console.log(e);
+        //         let node = e.target.parentNode;
+        //         let sumry = node.querySelector('.hide-post');
+        //         if (sumry) {
+        //             //console.log("BEFORE", sumry.style.cdisplay);
+        //             if (!sumry.style.display || sumry.style.display === "none") {
+        //                 sumry.style.display = "block";
+        //             }   
+        //             else {
+        //                 sumry.style.display = "none";
+        //             }
+        //             //console.log("AFTER", sumry.style.display);
+        //         }
+        //     }
+        // }
+        
     }
+    
     //  })
     renderBlog(news);
     
