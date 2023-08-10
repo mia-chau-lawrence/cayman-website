@@ -1,8 +1,7 @@
 (function () {
     let images = ["images/shells.jpeg", "images/beach.jpg","images/beach2.jpg"];
 
-    home_image = images[getRndInteger(0, images.length)]
-    console.log(home_image);
+    home_image = images[getRndInteger(0, images.length)];
 
     function getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min) ) + min;

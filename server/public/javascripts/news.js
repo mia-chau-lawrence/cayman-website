@@ -1,29 +1,43 @@
 (function () {
-    const news = JSON.parse(localStorage.getItem("myPosts") ?? []);
+    // console.log(news);
+    
+    fetch(new Request("/myposts")).then(response => {
+        console.log("response:", response);
+        //const news = JSON.parse(localStorage.getItem("myPosts") ?? "[]"); dont use this
+        return response.json(); // JSON.parse(response); 
+    }).then(news => {
+        console.log("GET news", news);
+   
     //load posts to news.html
     // document.getElementById('load-posts').addEventListener('click', function (event) {
     // console.log("we getting there! " + news);   
     //render blog post
     function renderBlog (blogBoi) {
         let blogHtml = '';
-        // blogBoi.sort((a,b) => {
-        //     if (a.Date_value < b.Date_value) { return 1; }
-        //     if (a.Date_value > b.Date_value) { return -1; }
-        //     return 0;
-        // });
+        blogBoi.sort((a,b) => {
+            if (a.created_at < b.created_at) { return 1; }
+            if (a.created_at > b.created_at) { return -1; }
+            return 0;
+        });
         
         console.log("Preparing to create blog");
         for (let blog of blogBoi) {
             let blogContent = '';
 
+            let img = "";
+            if (blog["image"]) {
+                img = `<img src="${blog["image"]}" alt="Image not available" style="width:100%;" />`;
+            }
+
             let blogTemplate = `
                 <div class="main-enclose">
                     <div class="main-card">
-                        <img src="${blog["Image"]}" alt="Image not available" style="width:100%;">
+                        ${img}
                         <div class="m-container">
-                            <h3>${blog["Title"]}</h3>
-                            <h5>${blog["Date"]}</span></h5>
-                            <p>${blog["Post"]}</p>
+                            <h3>${blog["title"]}</h3>
+                            <h4>${blog["author"]}</h4>
+                            <h5>${blog["date"]}</h5>
+                            <p>${blog["post"]}</p>
                         </div>
                     </div>
                     <div class="bottom-card">
@@ -34,16 +48,20 @@
                 </div>
                 `;
             blogHtml += blogTemplate;   
-            console.log("created blog");
-        }       
-        document.getElementById('blog-post').innerHTML = blogHtml;  
+        } 
+        console.log("created blog:", blogHtml);
+
+        document.getElementById('blog-posts').innerHTML = blogHtml;  
     }
     //  })
     renderBlog(news);
     
     console.log("blog rendered");
-    console.log(news);
-
+    //console.log(news);
+        }).finally(() =>{
+            console.log("GET /myposts done");
+            
+        }); 
 
 }());
     
