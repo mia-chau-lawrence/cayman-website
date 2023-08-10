@@ -10,7 +10,7 @@
                 <p><label for="file" style="cursor: pointer;">Upload Image: </label>
                 <!-- <input type="file" accept="image/*" name="image" id="file"  onchange="loadFile(event)">
                 -->
-                <input type="file" accept="image/*" name="blogimage" id="file">
+                <input type="file" accept="image/*" name="blogimage" id="file" onchange="loadFile(event)">
                 </p>
                 <p><img id="output" width="200" /></p>
 
@@ -27,14 +27,14 @@
         `;
         collectHtml += collectTemplate;
 
-        //load image
-        // let image = null;
-        // loadFile = function(event) {
-        //     image = document.getElementById('output');
-        //     image.src = URL.createObjectURL(event.target.files[0]);
-        //     image = image.src        
-        //     return image;
-        // };
+        // preview image
+        let image = null;
+        loadFile = function(event) {
+            image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image = image.src        
+            return image;
+        };
 
         //console.log(posts);  
         document.getElementById('collect-post-info').innerHTML = collectHtml;
