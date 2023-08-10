@@ -14,14 +14,14 @@
                 </p>
                 <p><img id="output" width="200" /></p>
 
-                <label for="title">Title: </title>
-                <input type="text" name="title" id="title"><br><br>
+                <label for="title">Title: </label>
+                <input type="text" name="title" id="title" class="post-info"><br><br>
                 <label for="author">Author: </label>
-                <input type="text" name="author" id="author"><br><br>
+                <input type="text" name="author" id="author" class="post-info"><br><br>
                 <!--<label for="date">Date: </label>
                 <input type="date" name="date" id="date"><br><br>-->
                 <label for="post">Post: </label>
-                <input type="text" name="post" id="post"><br><br>
+                <textarea name="post" id="post" class="post"></textarea><br><br>
                 <input type="submit">
             </form>
         `;
@@ -79,7 +79,7 @@
         //     // dateInput.value = '';
         //     postInput.value = '';
         //     document.getElementById('output').src = '';
-            
+
         //     // format new post in html
         //     postHtml = '';
 
@@ -95,19 +95,19 @@
         //             </div>
         //         </div>  
         //     </div>
-            
+
         //     `;
 
         //     postHtml += completePost;
         //     console.log("post loaded");
 
         //     document.getElementById('new-post').innerHTML = postHtml;
-            
+
         //     //save posts to local storage
         //     //let myPosts = localStorage.getItem("myPosts");
         //     //let news = JSON.parse(myPosts ?? "[]");
         //     //localStorage.setItem("myPosts", JSON.stringify(news.concat(posts)));
-            
+
         //     console.log("newPost", newPost);
 
         //     fetch(new Request("/mypost"), { 

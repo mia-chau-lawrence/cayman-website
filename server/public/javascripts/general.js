@@ -7,12 +7,12 @@
     }).then(news => {
         console.log("news", news);
 
-        function renderRecentNews (news) {
+        function renderRecentNews(news) {
             let blogHtml = '';
-            
+
             for (let article of news) {
                 let blogContent = '';
-    
+
                 let img = "";
                 if (article.image) {
                     img = `<img src="${article["image"]}" alt="" width="50px" align="middle" />`;
@@ -26,14 +26,14 @@
                         </ul>
                     </div>
                         `;
-                blogHtml += blogTemplate;   
-            }       
-            document.getElementById('blog-post').innerHTML = blogHtml;  
+                blogHtml += blogTemplate;
+            }
+            document.getElementById('blog-post').innerHTML = blogHtml;
         }
-    
-    
+
+
         renderRecentNews(news);
-    
+
     });
 
 

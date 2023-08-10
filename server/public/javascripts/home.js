@@ -1,22 +1,22 @@
 (function () {
-    let images = ["images/shells.jpeg", "images/beach.jpg","images/beach2.jpg"];
+    let images = ["images/shells.jpeg", "images/beach.jpg", "images/beach2.jpg"];
 
     home_image = images[getRndInteger(0, images.length)];
 
     function getRndInteger(min, max) {
-        return Math.floor(Math.random() * (max - min) ) + min;
+        return Math.floor(Math.random() * (max - min)) + min;
     }
 
     //render image
-    function renderHomeImage () {
+    function renderHomeImage() {
         let imageHtml = '';
 
         let imageTemplate = `
             <img src="${home_image}" class="home-image">
             <hr>
                 `;
-        imageHtml += imageTemplate;         
-        document.getElementById('home-image').innerHTML = imageHtml;  
+        imageHtml += imageTemplate;
+        document.getElementById('home-image').innerHTML = imageHtml;
     }
     renderHomeImage();
 
