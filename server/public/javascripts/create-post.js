@@ -27,7 +27,7 @@
         `;
         collectHtml += collectTemplate;
 
-        // preview image
+        // preview
         let image = null;
         loadFile = function(event) {
             image = document.getElementById('output');

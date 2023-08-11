@@ -7,7 +7,7 @@
 	<meta name="keywords" content="cayman-islands">
 	<meta name="author" content="Mia Lawrence">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Add New Posts</title>
+	<title>Update Posts</title>
 
 	<script src="https://kit.fontawesome.com/d1fadc039c.js"></script>
 	<link rel="stylesheet" href="stylesheets/style-cayman-posts.css"> <!--add css file later-->
@@ -21,18 +21,33 @@
 	<div class="navbar">
 		<div class="nav-option"><a href="index.html">Home</a></div>
 		<div class="nav-option" id="load-posts"><a href="news.html">News</a></div>
-		<div class="nav-option  active"><a href="create-post.html">Create Post</a></div>
-		<div class="nav-option"><a href="update-posts.html">Update Posts</a></div>
+		<div class="nav-option"><a href="create-post.html">Create Post</a></div>
+        <div class="nav-option  active"><a href="update-posts.html">Update Posts</a></div>
 		<div class="nav-option"><a href="about-cayman.html">About</a></div>
 		<div class="nav-option"><a href="contact-cayman.html">Contact</a></div>
 		<!-- <div><img src="logo.png" style="height:100px;"></div> -->
 	</div>
 
-	<div class="form-container">
-		<h1>Recently:</h1>
-		<div id="collect-post-info"></div>
-		<div class="new-post-column" id="new-post"></div>
-	</div>
-</body>
+    <!-- <div class="page-container">
+        <h1>Which post would you like to delete?</h1>
+    </div>
+     -->
+    <div class="grey-background">
+        <div class="container">
+            <h1>Which post would you like to delete?</h1>
+            <form>
+                <label for="title">Post ID: </label>
+                    <input type="text" name="id" id="postId" class="post-info">
+                    <input type="submit">
+                </form>
+        </div>
+        <br><hr><br>
+        <div class="container">   
+            <div id="previous-posts" class="book-container"></div>        
+        </div>
+    </div>
+    
+ 
 
-<script src="javascripts/create-post.js"></script>
+</body>
+<script src="javascripts/update-posts.js"></script>
