@@ -1,7 +1,5 @@
 (function () {
-    // console.log(news);
-
-    fetch(new Request("/myposts")).then(response => {
+    fetch(new Request("/deletepost")).then(response => {
         console.log("response:", response);
         //const news = JSON.parse(localStorage.getItem("myPosts") ?? "[]"); dont use this
         return response.json(); // JSON.parse(response); 
@@ -16,14 +14,12 @@
                 return 0;
             });
 
-            let counter = news.length;
-            for (let blog of blogBoi) {
-                // let blogContent = '';                 
-                counter -= 1;             
+            for (let blog of blogBoi) {                
 
                 let blogTemplate = `
                 <div class="enclose-samples">   
-                    <div class="circle">${counter}</div>       
+                    <button id="delPostBtn" class="exit">x</button>   
+                    <br>    
                     <h3 class="changed">${blog["title"]}</h3>
                     <h5 class="changed">By ${blog["author"]}</h5>
                     <h5 class="changed">${blog["date"]}</h5>
@@ -41,11 +37,25 @@
 
         renderPosts(news);
 
-        console.log("blog rendered");
+        console.log("previous posts rendered");
         //console.log(news);
+
+        //popup for deleting post
+        document.getElementById("delPostBtn").addEventListener("click", confirmDelPost);
+        function confirmDelPost() {
+            let delPost;
+            if (confirm("Are you sure you want to delete this post?")) {
+                return delPost;
+            } else {
+                return delPost;
+            }
+        }
+    
+    //end fetch
     }).finally(() => {
-        console.log("GET /myposts done");
+        console.log("GET /deleteposts done");
 
     });
+
 
 }());

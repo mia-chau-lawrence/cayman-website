@@ -57,7 +57,9 @@ app.get('/myposts', function (request, response) {
       let newsPosts = [];
       rows.forEach((row) => {
         console.log(row);
-        newsPosts.push(JSON.parse(row.post));
+        let post = JSON.parse(row.post);
+        post.id = row.posts_id;
+        newsPosts.push(post);
       });
       console.log("GET newsPosts:", newsPosts);
       response.send(newsPosts);
@@ -66,7 +68,6 @@ app.get('/myposts', function (request, response) {
   });
 
 });
-
 
 app.post('/mypost', upload.single('blogimage'), function (request, response) {
   console.log("POST data", request.body);
@@ -146,3 +147,33 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+
+app.delete('/deletepost/:id', function (request, response) {
+  const postId = request.params.id;
+
+  let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
+      if (err) {
+          console.log("open db", err);
+          response.sendStatus(400);
+          return;
+      }
+      let sql = "DELETE FROM posts WHERE posts_id = ?";
+      let params = [postId];
+
+      db.run(sql, params, function (err) {
+          if (err) {
+              console.log("delete", err);
+              response.sendStatus(500);
+              return;
+          }
+
+          console.log("Deleted post with id:", postId);
+          response.sendStatus(200);
+      });
+
+      db.close();
+  });
+});
+
+

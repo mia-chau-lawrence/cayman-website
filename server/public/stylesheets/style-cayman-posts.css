@@ -341,15 +341,22 @@ article {
     padding:20px;
 }
 
-.circle {
+button.exit {
+    border:none;
     float:right;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
+    width: 21px;
+    height: 21px;
     padding: 2px;
-    background: #66B9BF;
+    /* font-size:10px;  */
+    background: teal;
     color: white;
     text-align: center;
+}
+
+button.exit:hover {
+    background: #66B9BF;
+    transition: 0.3s;
 }
 
 .home-img-container {
