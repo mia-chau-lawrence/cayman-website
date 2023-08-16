@@ -11,6 +11,8 @@
             let blogHtml = '';
 
             for (let article of news) {
+                //for (let article = 0; article < 5; article++) {
+
                 let blogContent = '';
 
                 let img = "";
@@ -21,7 +23,7 @@
                 let blogTemplate = `
                     <div class="side-card">
                         <ul class="p-posts">                        
-                            <li><a href="news.html">
+                            <li><a href="news.html#${article["posts_id"]}">
                             ${img} ${article["title"]}</a></li>
                         </ul>
                     </div>
@@ -33,6 +35,10 @@
 
 
         renderRecentNews(news);
+
+
+    }).finally(() => {
+        console.log("GET /myposts done");
 
     });
 

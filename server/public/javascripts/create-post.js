@@ -15,11 +15,11 @@
                 <p><img id="output" width="200" /></p>
 
                 <label for="title">Title: </label>
-                <input type="text" name="title" id="title" class="post-info"><br><br>
+                <input type="text" name="title" id="title" class="post-info" required><br><br>
                 <label for="author">Author: </label>
-                <input type="text" name="author" id="author" class="post-info"><br><br>
+                <input type="text" name="author" id="author" class="post-info" required><br><br>
                 <!--<label for="date">Date: </label>
-                <input type="date" name="date" id="date"><br><br>-->
+                <input type="date" name="date" id="date"<br><br>-->
                 <label for="post">Post: </label>
                 <textarea name="post" id="post" class="post"></textarea><br><br>
                 <input type="submit">

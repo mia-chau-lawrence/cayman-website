@@ -128,6 +128,34 @@ app.post('/mypost', upload.single('blogimage'), function (request, response) {
   }
 });
 
+//delete a post
+app.delete('/mypost/:posts_id', function (request, response) {
+  const postId = request.params.posts_id;
+
+  let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.log("open db", err);
+      response.sendStatus(400);
+      return;
+    }
+    let sql = "DELETE FROM posts WHERE posts_id = ?";
+    let params = [postId];
+
+    db.run(sql, params, function (err) {
+      if (err) {
+        console.log("delete", err);
+        response.sendStatus(500);
+        return;
+      }
+
+      console.log("Deleted post with id:", postId);
+      response.sendStatus(200);
+    });
+
+    db.close();
+  });
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   console.log("Express default handler");
@@ -147,33 +175,5 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
-
-
-app.delete('/deletepost/:id', function (request, response) {
-  const postId = request.params.id;
-
-  let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
-      if (err) {
-          console.log("open db", err);
-          response.sendStatus(400);
-          return;
-      }
-      let sql = "DELETE FROM posts WHERE posts_id = ?";
-      let params = [postId];
-
-      db.run(sql, params, function (err) {
-          if (err) {
-              console.log("delete", err);
-              response.sendStatus(500);
-              return;
-          }
-
-          console.log("Deleted post with id:", postId);
-          response.sendStatus(200);
-      });
-
-      db.close();
-  });
-});
 
 

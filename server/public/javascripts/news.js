@@ -23,6 +23,9 @@
             console.log("Preparing to create blog");
             for (let blog of blogBoi) {
                 // let blogContent = '';
+                // let pig = blog["posts_id"];
+                // console.log(pig);
+                // console.log("hello  ");
 
                 let img = "";
                 if (blog["image"]) {
@@ -31,25 +34,27 @@
 
                 let blogTemplate = `
                 <div class="main-enclose">
-                    <div class="main-card">
-                        ${img}
-                        <div class="m-container">
-                            <h3>${blog["title"]}</h3>
-                            <h4>${blog["author"]}</h4>
-                            <h5>${blog["date"]}</h5>
-                            <div><p>${blog["post"]}</p></div>
+                    <div id="${blog["posts_id"]}">
+                        <div class="main-card">
+                            ${img}
+                            <div class="m-container">
+                                <h3 class="changed">${blog["title"]}</h3>
+                                <h5 class="changed">${blog["author"]}</h4>
+                                <h5 class="changed">${blog["date"]}</h5>
+                                <div><p>${blog["post"]}</p></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="bottom-card">
-                        <div class="container">
-                            <button class="button1 news-show-btn">READ MORE &raquo;</button>
-                        </div>
+                        <!--<div class="bottom-card">
+                            <div class="container">
+                                <button class="button1 news-show-btn">READ MORE &raquo;</button>
+                            </div>
+                        </div>-->
                     </div>
                 </div>
                 `;
                 blogHtml += blogTemplate;
             }
-            console.log("created blog:", blogHtml);
+            //console.log("created blog:", blogHtml);
             document.getElementById('blog-posts').innerHTML = blogHtml;
 
             //show and hide news details
