@@ -8,9 +8,6 @@
     }).then(news => {
         console.log("GET news", news);
 
-        //load posts to news.html
-        // document.getElementById('load-posts').addEventListener('click', function (event) {
-        // console.log("we getting there! " + news);   
         //render blog post
         function renderBlog(blogBoi) {
             let blogHtml = '';
@@ -21,16 +18,15 @@
             });
 
             console.log("Preparing to create blog");
-            for (let blog of blogBoi) {
-                // let blogContent = '';
-                // let pig = blog["posts_id"];
-                // console.log(pig);
-                // console.log("hello  ");
+            for (let blog of blogBoi) {            
 
                 let img = "";
                 if (blog["image"]) {
                     img = `<img src="${blog["image"]}" alt="Image not available" style="width:100%;" />`;
                 }
+
+                // Replace newline characters with HTML line breaks in the blog content
+                let formattedPost = blog["post"].replace(/\r\n/g, '<br>');
 
                 let blogTemplate = `
                 <div class="main-enclose">
@@ -41,7 +37,7 @@
                                 <h3 class="changed">${blog["title"]}</h3>
                                 <h5 class="changed">${blog["author"]}</h4>
                                 <h5 class="changed">${blog["date"]}</h5>
-                                <div><p>${blog["post"]}</p></div>
+                                <div><p>${formattedPost}</p></div>
                             </div>
                         </div>
                         <!--<div class="bottom-card">
@@ -57,33 +53,13 @@
             //console.log("created blog:", blogHtml);
             document.getElementById('blog-posts').innerHTML = blogHtml;
 
-            //show and hide news details
-            // let btns = document.getElementsByClassName('news-show-btn');
-            // for (let btn of btns) {
-            //     btn.onclick = function (e) {
-            //         //console.log(e);
-            //         let node = e.target.parentNode;
-            //         let sumry = node.querySelector('.hide-post');
-            //         if (sumry) {
-            //             //console.log("BEFORE", sumry.style.cdisplay);
-            //             if (!sumry.style.display || sumry.style.display === "none") {
-            //                 sumry.style.display = "block";
-            //             }   
-            //             else {
-            //                 sumry.style.display = "none";
-            //             }
-            //             //console.log("AFTER", sumry.style.display);
-            //         }
-            //     }
-            // }
-
         }
 
         //  })
         renderBlog(news);
 
         console.log("blog rendered");
-        //console.log(news);
+        console.log(news);
     }).finally(() => {
         console.log("GET /myposts done");
 

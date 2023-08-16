@@ -21,7 +21,7 @@
                 <!--<label for="date">Date: </label>
                 <input type="date" name="date" id="date"<br><br>-->
                 <label for="post">Post: </label>
-                <textarea name="post" id="post" class="post"></textarea><br><br>
+                <textarea name="post" id="postTextArea" class="post"></textarea><br><br>
                 <input type="submit">
             </form>
         `;
@@ -36,7 +36,8 @@
             return image;
         };
 
-        //console.log(posts);  
+        //console.log(posts);         
+
         document.getElementById('collect-post-info').innerHTML = collectHtml;
     }
 

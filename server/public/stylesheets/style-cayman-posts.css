@@ -674,6 +674,7 @@ textarea.post {
     background-color: white;
     font-family: Verdana, sans-serif;
     font-size:14px;
+    white-space: pre-wrap;
 }
 
 input[type=text]:focus,
