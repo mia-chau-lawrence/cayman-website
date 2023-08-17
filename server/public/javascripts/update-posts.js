@@ -9,6 +9,12 @@
             function renderPosts(blogBoi) {
                 let blogHtml = '';
 
+                blogBoi.sort((a, b) => {
+                    if (a.created_at < b.created_at) { return 1; }
+                    if (a.created_at > b.created_at) { return -1; }
+                    return 0;
+                });
+
                 for (let blog of blogBoi) {
                     let blogTemplate = `
                         <div class="enclose-samples">   

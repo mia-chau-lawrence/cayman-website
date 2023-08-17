@@ -86,7 +86,7 @@ div.fat {
 }
 
 body {
-    font-family: Verdana, sans-serif;
+    font-family: Arial, sans-serif;
     background-color: white;
     line-height: 1.6;
     margin: 0;
@@ -474,7 +474,7 @@ img.home-image {
 
 .main-card {
     background-color: white;
-    /* font-family:Verdana,sans-serif; */
+    /* font-family:Arial,sans-serif; */
     font-size: 16px;
 }
 
@@ -516,7 +516,7 @@ img.left {
 
 .side-card {
     background-color: white;
-    /* font-family:Verdana,sans-serif; */
+    /* font-family:Arial,sans-serif; */
     font-size: 16px;
 }
 
@@ -531,7 +531,7 @@ img.left {
 }
 
 .book-card {
-    /* font-family:Verdana,sans-serif; */
+    /* font-family:Arial,sans-serif; */
     font-size: 13px;
     color: #262626;
     height: 100%;
@@ -552,7 +552,7 @@ img.left {
 
 .contact-card {
     background-color: white;
-    /* font-family:Verdana; */
+    /* font-family:Arial; */
     font-size: 16px;
     border: none;
     border-radius: 10px;
@@ -570,7 +570,7 @@ img.left {
 .bar {
     background-color: none;
     font-size: 16px;
-    /* font-family:Verdana,sans-serif; */
+    /* font-family:Arial,sans-serif; */
 }
 
 /*End of cards*/
@@ -672,7 +672,7 @@ textarea.post {
     transition: 0.5s;
     outline: none;
     background-color: white;
-    font-family: Verdana, sans-serif;
+    font-family: Arial, sans-serif;
     font-size:14px;
     white-space: pre-wrap;
 }
