@@ -79,9 +79,11 @@ app.get('/myposts', function (request, response) {
     });
     db.close();
   });
+  
 
 });
 
+//begin of timeout
 var timestamp = Date.now(); 
 
 function myAuthorizer(username, password) {
@@ -123,13 +125,13 @@ function getUnauthorizedResponse(request, response) {
     : 'No credentials provided'
 }
 
-app.post('/mypost', basicAuth({
+app.post('/mypost', /*basicAuth({
   users: { 'jasmine': 'lawrence' },
   challenge: true,
   realm: 'seniors',
   unauthorizedResponse: getUnauthorizedResponse,
-})
-  , upload.single('blogimage')
+}),*/
+  upload.single('blogimage')
   , (request, response) => {
     console.log("POST data", request.body);
     console.log("POST file", request.file);
