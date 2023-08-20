@@ -25,6 +25,12 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 
+//timeout
+// var bodyParser = require('body-parser')
+// var cookieParser = require('cookie-parser')
+// var express = require('express')
+// var timeout = require('connect-timeout')
+
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
@@ -43,8 +49,8 @@ app.use('/users', usersRouter);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //const newsPosts = [];
 
-app.use('/mia', function (request, response) {
-});
+// app.use('/mia', function (request, response) {
+// });
 
 app.get('/myposts', function (request, response) {
   let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
@@ -76,12 +82,53 @@ app.get('/myposts', function (request, response) {
 
 });
 
-app.post('/mypost',
-  basicAuth({
-    users: { 'jasmine': 'lawrence' },
-    challenge: true,
-    realm: 'seniors'
-  })
+var timestamp = Date.now(); 
+
+function myAuthorizer(username, password) {
+  const userMatches = basicAuth.safeCompare(username, 'jasmine')
+  const passwordMatches = basicAuth.safeCompare(password, 'lawrence')
+
+  if (userMatches & passwordMatches && (Date.now() - timestamp > 10000)) {
+    timestamp = Date.now();
+    return false;
+  }
+  timestamp = Date.now();
+
+  return userMatches & passwordMatches
+}
+
+app.get('/logout', 
+function (req, res, next ) {
+  console.log(req.auth);
+  console.log(JSON.stringify(req.headers, null, 4));
+  next();
+},
+basicAuth({
+  authorizer: myAuthorizer,
+  challenge: true,
+  realm: 'seniors',
+  unauthorizedResponse: getUnauthorizedResponse,
+}),
+  function (req, res) {
+    console.log(req.session);
+    return res.status(200).send(JSON.stringify(req.headers, null, 4));
+  });
+
+//failed authentication
+function getUnauthorizedResponse(request, response) {
+  console.log('getUnauthorizedResponse', request  .auth, response ? 'Y' : "N");
+  //return response.redirect('/index.html');
+  return request.auth
+    ? ('Credentials ' + request.auth.user + ':' + request.auth.password + ' rejected')
+    : 'No credentials provided'
+}
+
+app.post('/mypost', basicAuth({
+  users: { 'jasmine': 'lawrence' },
+  challenge: true,
+  realm: 'seniors',
+  unauthorizedResponse: getUnauthorizedResponse,
+})
   , upload.single('blogimage')
   , (request, response) => {
     console.log("POST data", request.body);
