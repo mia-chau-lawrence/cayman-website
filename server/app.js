@@ -10,8 +10,10 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+// Authentication module.
+const basicAuth = require('express-basic-auth');
 
-
+//downloading images to file
 var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -41,6 +43,9 @@ app.use('/users', usersRouter);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //const newsPosts = [];
 
+app.use('/mia', function (request, response) {
+});
+
 app.get('/myposts', function (request, response) {
   let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -52,7 +57,7 @@ app.get('/myposts', function (request, response) {
     let params = [];
     db.all(sql, params, function (err, rows) {
       if (err) {
-        console.log("insert", err);
+        console.log("insert");
         response.statusCode(400);
         return;
       }
@@ -71,64 +76,72 @@ app.get('/myposts', function (request, response) {
 
 });
 
-app.post('/mypost', upload.single('blogimage'), function (request, response) {
-  console.log("POST data", request.body);
-  console.log("POST file", request.file);
+app.post('/mypost',
+  basicAuth({
+    users: { 'jasmine': 'lawrence' },
+    challenge: true,
+    realm: 'seniors'
+  })
+  , upload.single('blogimage')
+  , (request, response) => {
+    console.log("POST data", request.body);
+    console.log("POST file", request.file);
 
-  //date 
-  let date = new Date();
-  let year = date.getFullYear();
-  let month = date.getMonth();
-  let day = date.getDate();
-  let hour = date.getHours();
-  let minute = date.getMinutes();
+    //date 
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
 
-  let monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  let dateValue = `${monthArray[month]} ${day}, ${year}`;
-  console.log(dateValue);
+    let monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let dateValue = `${monthArray[month]} ${day}, ${year}`;
+    console.log(dateValue);
 
-  let datePost = { created_at: date, display_date: dateValue }
+    let datePost = { created_at: date, display_date: dateValue }
 
-  let newsPost = request.body; //JSON.parse(request.body);
+    let newsPost = request.body; //JSON.parse(request.body);
 
-  newsPost.created_at = datePost.created_at;
-  newsPost.date = datePost.display_date;
+    newsPost.created_at = datePost.created_at;
+    newsPost.date = datePost.display_date;
 
-  try {
-    if (request.file) {
-      newsPost.image = "/postimages/" + request.file.filename;
-    }
-
-    //  newsPosts.push(newsPost);
-    let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
-      if (err) {
-        console.log("open db", err);
-        response.statusCode(400);
-        return;
+    try {
+      if (request.file) {
+        newsPost.image = "/postimages/" + request.file.filename;
       }
-      let sql = "insert into posts (post) values (?)";
-      let params = [JSON.stringify(newsPost)];
-      db.run(sql, params, function (err) {
+
+      //  newsPosts.push(newsPost);
+      let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
         if (err) {
-          console.log("insert", err);
+          console.log("open db", err);
           response.statusCode(400);
           return;
         }
-        response.redirect("/news.html");
+        let sql = "insert into posts (post) values (?)";
+        let params = [JSON.stringify(newsPost)];
+        db.run(sql, params, function (err) {
+          if (err) {
+            console.log("insert", err);
+            response.statusCode(400);
+            return;
+          }
+          response.redirect("/news.html");
+        });
+        db.close();
       });
-      db.close();
-    });
-    //console.log("POST newsPosts", newsPosts);
+      //console.log("POST newsPosts", newsPosts);
 
 
-    //response.sendStatus(200);
+      //response.sendStatus(200);
 
-  }
-  catch (e) {
-    console.log("catch", e);
-    response.sendStatus(500);
-  }
-});
+    }
+    catch (e) {
+      console.log("catch", e);
+      response.sendStatus(500);
+    }
+
+  });
 
 //delete a post
 app.delete('/mypost/:posts_id', function (request, response) {
