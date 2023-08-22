@@ -83,12 +83,32 @@ app.get('/myposts', function (request, response) {
 
 //begin of timeout
 var timestamp = Date.now();
-
+let loginFails = 0;
+let retryTimestamp = null;
 function myAuthorizer(username, password) {
   const userMatches = basicAuth.safeCompare(username, 'jasmine')
   const passwordMatches = basicAuth.safeCompare(password, 'lawrence')
 
   console.log("@myauthorizer");
+  if (retryTimestamp !== null) {
+    if (Date.now() - retryTimestamp < 10000) {
+      throw "Too many bad login attempts";
+      return false;
+    } else {
+      retryTimestamp = null;
+    }
+  }
+
+  if ((userMatches & passwordMatches) === 0) {
+    loginFails += 1;
+    if (loginFails > 3) {
+      loginFails = 0;
+      console.log("Too many failed login attempts");
+      retryTimestamp = Date.now();
+      throw "Too many failed login attempts";
+
+    }
+  }
   if (userMatches & passwordMatches && (Date.now() - timestamp > 10000)) {
     console.log("@myauthorizer", "session expired");
     timestamp = Date.now();
@@ -114,8 +134,9 @@ function daAuthorizer(req, res, next) {
 
 app.get('/login',
   daAuthorizer,
+
   function (req, res) {
-    console.log(req.session);
+    console.log(req.auth);
     return res.status(200).send(JSON.stringify(req.headers, null, 4));
   });
 
