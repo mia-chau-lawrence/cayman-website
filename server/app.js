@@ -134,7 +134,6 @@ function daAuthorizer(req, res, next) {
 
 app.get('/login',
   daAuthorizer,
-
   function (req, res) {
     console.log(req.auth);
     return res.status(200).send(JSON.stringify(req.headers, null, 4));
@@ -215,7 +214,7 @@ app.post('/mypost',
   });
 
 //delete a post
-app.delete('/mypost/:posts_id', function (req, res) {
+app.delete('/mypost/:posts_id', daAuthorizer, function (req, res) {
   const postId = req.params.posts_id;
 
   let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
