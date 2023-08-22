@@ -79,18 +79,18 @@ app.get('/myposts', function (request, response) {
     });
     db.close();
   });
-  
-
 });
 
 //begin of timeout
-var timestamp = Date.now(); 
+var timestamp = Date.now();
 
 function myAuthorizer(username, password) {
   const userMatches = basicAuth.safeCompare(username, 'jasmine')
   const passwordMatches = basicAuth.safeCompare(password, 'lawrence')
 
+  console.log("@myauthorizer");
   if (userMatches & passwordMatches && (Date.now() - timestamp > 10000)) {
+    console.log("@myauthorizer", "session expired");
     timestamp = Date.now();
     return false;
   }
@@ -99,18 +99,21 @@ function myAuthorizer(username, password) {
   return userMatches & passwordMatches
 }
 
-app.get('/logout', 
-function (req, res, next ) {
-  console.log(req.auth);
+function daAuthorizer(req, res, next) {
+  console.log("@daAuthorizer", req.auth);
   console.log(JSON.stringify(req.headers, null, 4));
-  next();
-},
-basicAuth({
-  authorizer: myAuthorizer,
-  challenge: true,
-  realm: 'seniors',
-  unauthorizedResponse: getUnauthorizedResponse,
-}),
+
+  return (basicAuth({
+    authorizer: myAuthorizer,
+    challenge: true,
+    realm: 'seniors',
+    unauthorizedResponse: getUnauthorizedResponse,
+  }))(req, res, next);
+
+}
+
+app.get('/login',
+  daAuthorizer,
   function (req, res) {
     console.log(req.session);
     return res.status(200).send(JSON.stringify(req.headers, null, 4));
@@ -118,19 +121,17 @@ basicAuth({
 
 //failed authentication
 function getUnauthorizedResponse(request, response) {
-  console.log('getUnauthorizedResponse', request  .auth, response ? 'Y' : "N");
+  console.log('getUnauthorizedResponse', request.auth, response ? 'Y' : "N");
   //return response.redirect('/index.html');
   return request.auth
     ? ('Credentials ' + request.auth.user + ':' + request.auth.password + ' rejected')
     : 'No credentials provided'
 }
 
-app.post('/mypost', /*basicAuth({
-  users: { 'jasmine': 'lawrence' },
-  challenge: true,
-  realm: 'seniors',
-  unauthorizedResponse: getUnauthorizedResponse,
-}),*/
+
+
+app.post('/mypost',
+  /*daAuthorizer,*/
   upload.single('blogimage')
   , (request, response) => {
     console.log("POST data", request.body);
@@ -193,13 +194,13 @@ app.post('/mypost', /*basicAuth({
   });
 
 //delete a post
-app.delete('/mypost/:posts_id', function (request, response) {
-  const postId = request.params.posts_id;
+app.delete('/mypost/:posts_id', function (req, res) {
+  const postId = req.params.posts_id;
 
   let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.log("open db", err);
-      response.sendStatus(400);
+      res.sendStatus(400);
       return;
     }
     let sql = "DELETE FROM posts WHERE posts_id = ?";
@@ -208,12 +209,12 @@ app.delete('/mypost/:posts_id', function (request, response) {
     db.run(sql, params, function (err) {
       if (err) {
         console.log("delete", err);
-        response.sendStatus(500);
+        res.sendStatus(500);
         return;
       }
 
       console.log("Deleted post with id:", postId);
-      response.sendStatus(200);
+      res.sendStatus(200);
     });
 
     db.close();

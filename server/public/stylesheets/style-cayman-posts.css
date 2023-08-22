@@ -977,7 +977,10 @@ td {
         width: 100%;
         padding: 25px 50px;
     }
-
+    .one-column {
+        width: 100%;
+        padding: 25px 50px;
+    }
     .navbar>div {
         width: 100%;
     }
