@@ -53,6 +53,9 @@ app.use('/users', usersRouter);
 // });
 
 app.get('/myposts', function (request, response) {
+  let usernameJson = null;
+  let passwordJson = null;
+
   let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.log("open db", err);
@@ -86,9 +89,63 @@ var timestamp = Date.now();
 let loginFails = 0;
 let retryTimestamp = null;
 function myAuthorizer(username, password) {
-  const userMatches = basicAuth.safeCompare(username, 'jasmine')
-  const passwordMatches = basicAuth.safeCompare(password, 'lawrence')
+  let db = new sqlite3.Database('./posts.db', sqlite3.OPEN_READONLY, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Connected to the posts database.');
+  });
 
+  //stuff here
+  let sqlUsername = `SELECT username FROM login where login_id = ?`;
+  let sqlPassword = `SELECT password FROM login where login_id = ?`;
+  let loginId = 1;
+
+  db.get(sqlUsername, [loginId], (err, row) => {
+    if (err) {
+      console.log("failed to fetch sqlUsername");
+      return console.error(err.message);
+    }
+    usernameJson = row;
+    console.log(usernameJson);
+    return row
+      ? console.log(row.login_id, row.username)
+      : console.log(`can't find username with loginId ${loginId}`);
+
+  });
+  db.get(sqlPassword, [loginId], (err, row) => {
+    if (err) {
+      console.log("failed to fetch sqlPassword");
+      return console.error(err.message);
+    }
+    passwordJson = row;
+    console.log(passwordJson);
+    return row
+      ? console.log(row.login_id, row.password)
+      : console.log(`can't find password with loginId ${loginId}`);
+
+  });
+
+  //console.log("fetched username and password:", usernameJson, passwordJson);
+  db.close((err) => {
+    if (err) {
+      console.error(err.message);
+    }
+    console.log('Close the database connection.');
+  });
+
+  console.log("here is the username and password", usernameJson, passwordJson);
+  let userName = usernameJson["username"];
+  let passWord = passwordJson["password"];
+  console.log("HERE: ", userName, passWord);
+  console.log("userName is " + typeof userName);
+  console.log("passWord is " + typeof passWord);
+  const userMatches = basicAuth.safeCompare(username, userName);
+  const passwordMatches = basicAuth.safeCompare(password, passWord);
+  //console.log("we got a matcher!");
+
+
+  //checking for bad logins
   console.log("@myauthorizer");
   if (retryTimestamp !== null) {
     if (Date.now() - retryTimestamp < 10000) {
@@ -115,7 +172,9 @@ function myAuthorizer(username, password) {
     return false;
   }
   timestamp = Date.now();
+  //stuff above here
 
+  //find alternate to return--- it's what is keep the db from closing
   return userMatches & passwordMatches
 }
 
@@ -147,8 +206,6 @@ function getUnauthorizedResponse(request, response) {
     ? ('Credentials ' + request.auth.user + ':' + request.auth.password + ' rejected')
     : 'No credentials provided'
 }
-
-
 
 app.post('/mypost',
   /*daAuthorizer,*/
