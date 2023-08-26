@@ -13,7 +13,6 @@
 
         let imageTemplate = `
             <img src="${home_image}" class="home-image">
-            <hr>
                 `;
         imageHtml += imageTemplate;
         document.getElementById('home-image').innerHTML = imageHtml;

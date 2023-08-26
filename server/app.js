@@ -47,10 +47,6 @@ app.use('/users', usersRouter);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//const newsPosts = [];
-
-// app.use('/mia', function (request, response) {
-// });
 
 app.get('/myposts', function (request, response) {
   let usernameJson = null;

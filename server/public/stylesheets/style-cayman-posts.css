@@ -86,7 +86,7 @@ div.fat {
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: "proxima-nova",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     background-color: white;
     line-height: 1.6;
     margin: 0;
@@ -361,17 +361,27 @@ button.exit:hover {
 }
 
 .home-img-container {
-    padding: 50px 150px 10px 150px;
+    background-color:#f2f2f2;
     width: 100%;
-    background-color: #f2f2f2;
 }
 
 img.home-image {
-    box-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.12), 0 6px 12px rgba(0, 0, 0, 0.24);
+    /* box-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.12), 0 6px 12px rgba(0, 0, 0, 0.24); */
     width: 100%;
-    /* border: 10px solid #006666; */
 }
 
+.text-block {
+    position: absolute;
+    bottom: 0px;
+    right: 50px;
+    /* background-color: black; */
+    /* border:solid black 10px; */
+    background-color:black;/*#003333;*/
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size:3vh;
+}
 
 .lhs-column {
     width: 70%;
@@ -421,6 +431,8 @@ img.home-image {
 }
 
 .main-enclose {
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    /* font-family: "proxima-nova",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; */
     margin-bottom: 30px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12), 0 6px 12px rgba(0, 0, 0, 0.24);
     transition: 0.3s;
@@ -807,7 +819,7 @@ footer {
     padding: 0px 5px;
     text-align: center;
     line-height: 35px;
-    font-size: 35px;
+    font-size: 25px;
     color: white;
     font-family: 'Brush Script MT';
 }
@@ -817,30 +829,21 @@ footer {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    background: #66B9BF;
+    background: #00b3b3;
     position: -webkit-sticky;
-    /*safari*/
     position: sticky;
     top: 0;
-    /* padding-right:20px; */
+    padding:0px 20px;
 
 }
 
 .navbar>div {
     text-align: center;
     line-height: 50px;
-    font-size: 30px;
-}
-
-.navbar>div:first-child {
-    margin-left: auto;
-}
-
-.navbar>div:last-child {
-    margin-right: 20px;
 }
 
 .navbar a {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     padding: 25px;
     text-decoration: none;
