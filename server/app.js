@@ -223,6 +223,8 @@ app.post('/mypost',
     console.log(dateValue);
 
     let datePost = { created_at: date, display_date: dateValue }
+    //let createdAt = { created_at: date }
+
 
     let newsPost = request.body; //JSON.parse(request.body);
 
@@ -241,17 +243,25 @@ app.post('/mypost',
           response.statusCode(400);
           return;
         }
-        let sql = "insert into posts (post) values (?)";
-        let params = [JSON.stringify(newsPost)];
+        
+        //experimenting with insert date
+        let sql = "insert into posts (post, created_at, date_text, image_file, title, author, post_content) values ( (?), (?), (?), (?), (?), (?), (?))";
+        //let params = [JSON.stringify(newsPost)];
+
+        let params = [JSON.stringify(newsPost), JSON.stringify(newsPost.created_at), JSON.stringify(newsPost.date),
+          JSON.stringify(newsPost.image), JSON.stringify(newsPost.title), JSON.stringify(newsPost.author),
+          JSON.stringify(newsPost.post)];
+
         db.run(sql, params, function (err) {
           if (err) {
             console.log("insert", err);
-            response.statusCode(400);
+            response.status(400);
             return;
           }
           response.redirect("/news.html");
         });
         db.close();
+
       });
       //console.log("POST newsPosts", newsPosts);
 
