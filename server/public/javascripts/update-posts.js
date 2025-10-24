@@ -4,8 +4,6 @@
         .then(news => {
             renderPosts(news);
 
-
-
             function renderPosts(blogBoi) {
                 let blogHtml = '';
 

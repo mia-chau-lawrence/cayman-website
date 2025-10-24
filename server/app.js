@@ -289,6 +289,7 @@ app.delete('/mypost/:posts_id', daAuthorizer, function (req, res) {
     let sql = "DELETE FROM posts WHERE posts_id = ?";
     let params = [postId];
 
+    //delete reference from sql
     db.run(sql, params, function (err) {
       if (err) {
         console.log("delete", err);
@@ -298,6 +299,7 @@ app.delete('/mypost/:posts_id', daAuthorizer, function (req, res) {
 
       console.log("Deleted post with id:", postId);
       res.sendStatus(200);
+
     });
 
     db.close();

@@ -3,7 +3,6 @@
 
     fetch(new Request("/myposts")).then(response => {
         console.log("response:", response);
-        //const news = JSON.parse(localStorage.getItem("myPosts") ?? "[]"); dont use this
         return response.json(); // JSON.parse(response); 
     }).then(news => {
         console.log("GET news", news);
